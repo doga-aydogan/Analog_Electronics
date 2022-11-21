@@ -1,0 +1,117 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsthm}
+
+\begin{document}
+
+\begin{proof}
+Sallen-Key Low-Pass Filter Transfer Function \\
+
+\begin{figure}
+\centering
+\includegraphics[width = \textwidth]{circuit.png}
+\caption{Sallen-Key Low-Pass Filter}
+\label{fig:my_label}
+\end{figure}
+
+Writing KCL equation at node \begin{math} V_a \end{math} yields:
+\begin{equation} 
+\frac{V_i - V_a}{R_1} +  \frac{V_b - V_a}{R_2} + \frac{V_o - V_a}{Z_{C1}} = 0
+\end{equation}
+
+Writing voltage divison equation at node \begin{math} V_b \end{math} at non-inverting terminal yields:
+\begin{equation}
+V_b = V_a  \cdot \frac{Z_{C2}}{R_2 + Z_{C2}} 
+\end{equation}
+
+Writing voltage division equation at node \begin{math} V_b \end{math} at inverting terminal yields:
+\begin{equation}
+V_b = V_o \cdot \frac{R_3}{R_3 + R_4}
+\end{equation}
+
+Using equations 2, 3 and solving for \begin{math} V_a \end{math} gives:
+\begin{equation}
+V_a = V_o \cdot \frac{R_3}{R_3 + R_4} \cdot \frac{R_2 + Z_{C2}}{Z_{C2}}
+\end{equation}
+
+Inserting \begin{math} V_a \end{math}'s equivalent in Eq. 4 and \begin{math} V_b \end{math}'s equivalent in Eq. 3 to Eq. 1 results:
+\begin{equation}
+\begin{aligned}
+& \frac{V_i}{R_1} - \frac{V_o}{R_1} \cdot \frac{R_3}{R_3 + R_4} \cdot \frac{R_2 + Z_{C2}}{Z_{C2}} + \frac{V_o}{R_2} \cdot \frac{R_3}{R_3 + R_4} - \\
+& \frac{V_o}{R_2} \cdot \frac{R_3}{R_3 + R_4} \cdot \frac{R_2 + Z_{C2}}{Z_{C2}} + \frac{V_o}{Z_{C1}} - \frac{V_o}{Z_{C1}}  \cdot \frac{R_3}{R_3 + R_4} \cdot \\
+& \frac{R_2 + Z_{C2}}{Z_{C2}} = 0
+\end {aligned}
+\end{equation}
+
+
+Solving Eq. 5 for \begin{math} \frac{V_o}{V_i} \end{math} yields:
+\begin{equation}
+\begin{aligned}
+& \frac{V_o}{V_i} = 1 / [ \frac{R_3}{R_3 + R4} \cdot  ( \frac{R_2 + Z_{C2}}{Z_{C2}} - \frac{R_1}{R_2} + \frac{R_1 \cdot (R_2 + Z_{C2})}{R_2 \cdot Z_{C2}} - \\
+& \frac{R_1 \cdot (R_3 + R_4)}{R_3 \cdot Z_{C1}} + \frac{R_1 \cdot (R_2 + Z_ {C2})}{Z_ {C1} \cdot Z_ {C2}} ) ]
+\end {aligned}
+\end{equation}
+
+Then substituting \begin{math} Z = \frac{1}{jwC} \end{math} in to the Eq. 6, simpyfing it, and rewriting it in the 
+\begin{math} 
+\frac{V_o}{V_i} = 1 / [ \frac{R_3}{R_3 + R_4} \cdot ( w^2 \cdot (...) + jw \cdot (...) +1 ) ]  
+\end{math} 
+form results:
+
+\begin{equation}
+\begin{aligned}
+&\frac{V_o}{V_i} = 1 / [ \frac{R_3}{R_3 + R4} \cdot ( w^2 \cdot (-R_1 R_2 C_1 C_2) + jw \cdot \\ 
+&(R_1 C_1 \frac{-R_4}{R_3} + C_2 (R_1 + R_2) ) +1 ) ]
+\end {aligned}
+\end{equation}
+
+Let \begin{math} K = \frac{R_3 + R4}{R_3} \end{math}, using the equality \begin{math} j = \sqrt{-1} \end{math}, and \begin{math} w = 2 \pi f \end{math} Eq. 7 can be written as follows:
+
+\begin{equation}
+\begin{aligned}
+& \frac{V_o}{V_i} = K \cdot 1 / [ ( j 2 \pi f \sqrt{R_1 R_2 C_1 C_2} )^2 + j  2 \pi f \\
+& (R_1 C_1 \frac{-R_4}{R_3} + C_2 (R_1 + R_2) ) + 1 ]
+\end {aligned}
+\end{equation}
+
+And define \begin{math} f_0 \end{math} as \begin{math} \frac{1}{2 \pi \sqrt{R_1 R_2 C_1 C_2}} \end{math}. And rewriting Eq. 8 as follows:
+
+\begin{equation}
+\begin{aligned}
+& \frac{V_o}{V_i} = K \cdot 1 / [ (\frac{j f}{1 / ( 2 \pi \sqrt{R_1 R_2 C_1 C_2} ) } )^2 + j 2 \pi f \\
+& (R_1 C_1 \frac{-R_4}{R_3} + C_2 (R_1 + R_2) ) + 1 ]
+\end {aligned}
+\end{equation}
+
+In Eq. 9 inserting \begin{math} f_0 \end{math} to the squared term and multipying the \begin{math}  j 2 \pi f \end{math} term in the denominater with \begin{math} \frac{f_0}{f_0} \end{math}
+(\begin{math} 2 \pi \end{math} are cancelled)
+gives:
+
+\begin{equation}
+\begin{aligned}
+\frac{V_o}{V_i} = K \cdot 1 / [ (\frac{j f}{f_0})^2 + \frac{j f}{f_0} ( \frac{1}{ \sqrt{R_1 R_2 C_1 C_2}} (R_1 C_1 \frac{-R_4}{R_3} + C_2 (R_1 + R_2) ) ) + 1 ]
+\end {aligned}
+\end{equation}
+
+Observing that \begin{math} 1-K = \frac{-R_4}{R_3} \end{math} then Eq. 10 can be written as:
+
+\begin{equation}
+\begin{aligned}
+\frac{V_o}{V_i} = K \cdot 1 / [ (\frac{j f}{f_0})^2 + \frac{j f}{f_0} ( \frac{1}{\frac{\sqrt{R_1 R_2 C_1 C_2}}{(1-K) R_1 C_1 + C_2 ( R_1 + R_2)}}) + 1 ]
+\end {aligned}
+\end{equation}
+
+And let \begin{math} Q = \frac{\sqrt{R_1 R_2 C_1 C_2}}{(1-K) R_1 C_1 + C_2 ( R_1 + R_2)} \end{math}. Which is the quality factor of the filter. Then Eq. 11 can be written as follows:
+
+\begin{equation}
+\begin{aligned}
+\frac{V_o}{V_i} = K \cdot \frac{1}{(\frac{j f}{f_0})^2 +\frac{j f}{f_0} \frac{1}{Q} +1}
+\end {aligned}
+\end{equation}
+
+\end{proof}
+
+\end{document}
+
